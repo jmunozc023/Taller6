@@ -1,16 +1,18 @@
 package com.mycompany.calcsimple;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
-public class Calcsimple extends JFrame implements ItemListener{
+
+public class Calcsimple extends JFrame implements ItemListener, ActionListener{
     private JLabel titulo, instruccion, instruccion2, primerNumero, segNumero;
     private JTextField primNum, segNum;
     private JRadioButton suma,resta,multi,div;
     private ButtonGroup bg;
+    private JButton salir;
     int sum,rest,mult,divi;
 
     public Calcsimple(){
@@ -50,34 +52,52 @@ public class Calcsimple extends JFrame implements ItemListener{
         suma.setFont(new Font("Sans",Font.PLAIN,20));
         suma.setActionCommand("Sumar");
         suma.addItemListener(escucha);
-        
         add(suma);
         bg.add(suma);
-        //suma.addChangeListener(this);
         resta=new JRadioButton("Restar");
         resta.setBounds(550, 200, 200, 30);
         resta.setFont(new Font("Sans",Font.PLAIN,20));
-        //resta.addChangeListener(this);
+        resta.setActionCommand("Restar");
+        resta.addItemListener(escucha);
         add(resta);
         bg.add(resta);
         multi=new JRadioButton("Multiplicar");
         multi.setBounds(550, 225, 200, 30);
         multi.setFont(new Font("Sans",Font.PLAIN,20));
-        //multi.addChangeListener(this);
+        multi.setActionCommand("Multiplicar");
+        multi.addItemListener(escucha);
         add(multi);
         bg.add(multi);
         div=new JRadioButton("Dividir");
         div.setBounds(550, 250, 200, 30);
         div.setFont(new Font("Sans",Font.PLAIN,20));
-        //div.addChangeListener(this);
+        div.setActionCommand("Dividir");
+        div.addItemListener(escucha);
         add(div);
         bg.add(div);
-     
+        salir = new JButton("Salir");
+        salir.setBounds(550, 300, 100, 30);
+        add(salir);
+        salir.addActionListener(this);
+    }
+
+    
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource()== salir){
+            int seleccion= JOptionPane.showConfirmDialog(null, "Desea continuar calculando ", "Salir", JOptionPane.YES_NO_OPTION);
+            if (JOptionPane.OK_OPTION== seleccion){
+                System.out.println("Continuando");
+            } else {
+                System.exit(0);
+            }
+        }
     }
 
     @Override
     public void itemStateChanged(ItemEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        
     }
     public class Funciones{
         public void sum1(int num1, int num2) {
@@ -97,9 +117,7 @@ public class Calcsimple extends JFrame implements ItemListener{
             divi=divi1;
         }
     }
-    
-    
-    class funcItemListener implements ItemListener{
+    public class funcItemListener implements ItemListener{
 
         @Override
         public void itemStateChanged(ItemEvent e) {
@@ -119,56 +137,41 @@ public class Calcsimple extends JFrame implements ItemListener{
                         tipoMensaje = JOptionPane.INFORMATION_MESSAGE;
                         mensaje = "El resultado es: "+sum;
                     }
+                if (command.equals("Restar")) {
+                        String n1=primNum.getText();
+                        String n2=segNum.getText();
+                        int x=Integer.parseInt(n1);
+                        int y=Integer.parseInt(n2);
+                        func.rest1(x, y);
+                        tipoMensaje = JOptionPane.INFORMATION_MESSAGE;
+                        mensaje = "El resultado es: "+rest;
+                    }
+                if (command.equals("Multiplicar")) {
+                        String n1=primNum.getText();
+                        String n2=segNum.getText();
+                        int x=Integer.parseInt(n1);
+                        int y=Integer.parseInt(n2);
+                        func.mult1(x, y);
+                        tipoMensaje = JOptionPane.INFORMATION_MESSAGE;
+                        mensaje = "El resultado es: "+mult;
+                    }
+                if (command.equals("Dividir")) {
+                        String n1=primNum.getText();
+                        String n2=segNum.getText();
+                        int x=Integer.parseInt(n1);
+                        int y=Integer.parseInt(n2);
+                        func.divi1(x, y);
+                        tipoMensaje = JOptionPane.INFORMATION_MESSAGE;
+                        mensaje = "El resultado es: "+divi;
+                    }
                 JOptionPane.showMessageDialog(null, mensaje,"Resultado",tipoMensaje);
             }
         }
     }
-    /*public void stateChanged(ChangeEvent e) {
-        
-        
-        if (suma.isSelected()) {
-            String n1=primNum.getText();
-            String n2=segNum.getText();
-            int x=Integer.parseInt(n1);
-            int y=Integer.parseInt(n2);
-            func.sum1(x, y);
-            System.out.println("Resultado imprimido");
-            bg.clearSelection();
-            JOptionPane.showMessageDialog(null, "El resultado es: "+sum);
-        }
-        if (resta.isSelected()) {
-            String n1=primNum.getText();
-            String n2=segNum.getText();
-            int x=Integer.parseInt(n1);
-            int y=Integer.parseInt(n2);
-            func.rest1(x, y);
-            tipoMensaje= JOptionPane.INFORMATION_MESSAGE;
-            /*bg.clearSelection();
-            JOptionPane.showMessageDialog(null, "El resultado es: "+rest);
-            
-        }
-        if (multi.isSelected()) {
-            String n1=primNum.getText();
-            String n2=segNum.getText();
-            int x=Integer.parseInt(n1);
-            int y=Integer.parseInt(n2);
-            func.mult1(x, y);
-            JOptionPane.showMessageDialog(null, "El resultado es: "+mult);
-            bg.clearSelection();
-        }
-        if (div.isSelected()) {
-            String n1=primNum.getText();
-            String n2=segNum.getText();
-            int x=Integer.parseInt(n1);
-            int y=Integer.parseInt(n2);
-            func.divi1(x, y);
-            JOptionPane.showMessageDialog(null, "El resultado es: "+divi);
-            bg.clearSelection();
-        }
-    }*/
+  
     public static void main(String[] args) {
         Calcsimple form= new Calcsimple();
-        form.setBounds(171, 134, 1024, 800);
+        form.setBounds(400, 250, 1024, 450);
         form.setVisible(true);
     }
 
