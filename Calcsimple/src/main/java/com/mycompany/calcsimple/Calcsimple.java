@@ -7,14 +7,14 @@ import java.awt.event.ItemListener;
 import javax.swing.*;
 
 
-public class Calcsimple extends JFrame implements ItemListener, ActionListener{
+public class Calcsimple extends JFrame implements  ActionListener{
     private JLabel titulo, instruccion, instruccion2, primerNumero, segNumero;
     private JTextField primNum, segNum;
     private JRadioButton suma,resta,multi,div;
     private ButtonGroup bg;
     private JButton salir;
-    int sum,rest,mult,divi;
-
+    int sum,rest,mult;
+    float divi;
     public Calcsimple(){
         funcItemListener escucha=new funcItemListener();
         setLayout(null);
@@ -88,17 +88,14 @@ public class Calcsimple extends JFrame implements ItemListener, ActionListener{
         if (e.getSource()== salir){
             int seleccion= JOptionPane.showConfirmDialog(null, "Desea continuar calculando ", "Salir", JOptionPane.YES_NO_OPTION);
             if (JOptionPane.OK_OPTION== seleccion){
-                System.out.println("Continuando");
+                JOptionPane.showMessageDialog(null, "Continuando...");
             } else {
                 System.exit(0);
             }
         }
     }
 
-    @Override
-    public void itemStateChanged(ItemEvent e) {
-        
-    }
+    
     public class Funciones{
         public void sum1(int num1, int num2) {
             int sum1 = num1 + num2;
@@ -112,8 +109,8 @@ public class Calcsimple extends JFrame implements ItemListener, ActionListener{
             int mult1 = num1 * num2;
             mult=mult1;
         }
-        public void divi1(int num1, int num2) {
-            int divi1 = num1 / num2;
+        public void divi1(float num1, float num2) {
+            float divi1 = num1 / num2;
             divi=divi1;
         }
     }
@@ -158,8 +155,8 @@ public class Calcsimple extends JFrame implements ItemListener, ActionListener{
                 if (command.equals("Dividir")) {
                         String n1=primNum.getText();
                         String n2=segNum.getText();
-                        int x=Integer.parseInt(n1);
-                        int y=Integer.parseInt(n2);
+                        float x=Float.parseFloat(n1);
+                        float y=Float.parseFloat(n2);
                         func.divi1(x, y);
                         tipoMensaje = JOptionPane.INFORMATION_MESSAGE;
                         mensaje = "El resultado es: "+divi;
