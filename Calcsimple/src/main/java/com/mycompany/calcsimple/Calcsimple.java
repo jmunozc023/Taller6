@@ -5,8 +5,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import javax.swing.*;
-
-
 public class Calcsimple extends JFrame implements  ActionListener{
     private JLabel titulo, instruccion, instruccion2, primerNumero, segNumero;
     private JTextField primNum, segNum;
@@ -80,9 +78,6 @@ public class Calcsimple extends JFrame implements  ActionListener{
         add(salir);
         salir.addActionListener(this);
     }
-
-    
-
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource()== salir){
@@ -94,8 +89,6 @@ public class Calcsimple extends JFrame implements  ActionListener{
             }
         }
     }
-
-    
     public class Funciones{
         public void sum1(int num1, int num2) {
             int sum1 = num1 + num2;
